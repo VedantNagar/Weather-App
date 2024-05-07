@@ -66,3 +66,14 @@
   align-items: flex-start;
   gap: 15px;
 }
+.data {
+  font-size: 34px;
+  font-weight: 400;
+}
+.icon {
+  margin-top: 10px;
+}
+.text {
+  font-size: 20px;
+  font-weight: 400;
+}
