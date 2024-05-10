@@ -10,12 +10,22 @@ import snow from '../assets/snow.png';
 import wind from '../assets/wind.png';
 
 const Weather = () => {
+  const api_key = 'df834c31d603a0e29f3cdabf72993e65';
+
+  const search = () => {
+    const element = document.getElementsByClassName('cityInput');
+    if (element[0].value === '') {
+      return 0;
+    }
+    var url = `https://api.openweathermap.org/data/2.5/weather?q=${element[0].value}&units=Metric&appid=${api_key}`;
+  };
+
   return (
     <>
       <div className='container'>
         <div className='top-bar'>
           <input type='text' className='cityInput' placeholder='Search' />
-          <div className='search-icon'>
+          <div className='search-icon' onClick={() => search()}>
             <img src={search_icon} alt='search-icon' />
           </div>
         </div>
