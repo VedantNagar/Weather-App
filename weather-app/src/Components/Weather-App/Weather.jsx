@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Weather.css';
 import search_icon from '../assets/search.png';
 import clear from '../assets/clear.png';
@@ -11,13 +11,60 @@ import wind from '../assets/wind.png';
 
 const Weather = () => {
   const api_key = 'df834c31d603a0e29f3cdabf72993e65';
+  const [icon, setIcon] = useState();
 
-  const search = () => {
+  const search = async () => {
     const element = document.getElementsByClassName('cityInput');
     if (element[0].value === '') {
       return 0;
     }
     var url = `https://api.openweathermap.org/data/2.5/weather?q=${element[0].value}&units=Metric&appid=${api_key}`;
+    let response = await fetch(url);
+    let data = await response.json();
+    const humidity = document.getElementsByClassName('humidity');
+    const wind = document.getElementsByClassName('wind-speed');
+    const temp = document.getElementsByClassName('weather-temp');
+    const location = document.getElementsByClassName('weather-location');
+    humidity[0].innerHTML = data.main.humidity + ' %';
+    wind[0].innerHTML = data.wind.speed + ' km/hr';
+    temp[0].innerHTML = Math.floor(data.main.temp) + '°C';
+    location[0].innerHTML = data.name;
+
+    if (data.weather[0].icon === '01d' || data.weather[0].icon === '01n') {
+      setIcon(clear);
+    } else if (
+      data.weather[0].icon === '02d' ||
+      data.weather[0].icon === '02n'
+    ) {
+      setIcon(cloud);
+    } else if (
+      data.weather[0].icon === '03d' ||
+      data.weather[0].icon === '03n'
+    ) {
+      setIcon(drizzle);
+    } else if (
+      data.weather[0].icon === '04d' ||
+      data.weather[0].icon === '04n'
+    ) {
+      setIcon(drizzle);
+    } else if (
+      data.weather[0].icon === '09d' ||
+      data.weather[0].icon === '09n'
+    ) {
+      setIcon(rain);
+    } else if (
+      data.weather[0].icon === '10d' ||
+      data.weather[0].icon === '10n'
+    ) {
+      setIcon(rain);
+    } else if (
+      data.weather[0].icon === '13d' ||
+      data.weather[0].icon === '13n'
+    ) {
+      setIcon(snow);
+    } else {
+      setIcon(clear);
+    }
   };
 
   return (
@@ -30,7 +77,7 @@ const Weather = () => {
           </div>
         </div>
         <div className='weather-image'>
-          <img src={cloud} alt='clouds' />
+          <img src={icon} alt='clouds' />
         </div>
         <div className='weather-temp'>24°C</div>
         <div className='weather-location'>New Delhi</div>
