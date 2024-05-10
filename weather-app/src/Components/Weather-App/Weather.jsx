@@ -12,58 +12,65 @@ import wind from '../assets/wind.png';
 const Weather = () => {
   const api_key = 'df834c31d603a0e29f3cdabf72993e65';
   const [icon, setIcon] = useState(cloud);
+  const [weatherInfo, setWeatherInfo] = useState({
+    location: 'New Delhi',
+    humidity: '69%',
+    windSpeed: '69 km/hr',
+    temperature: '69°C',
+  });
 
   const search = async () => {
     const element = document.getElementsByClassName('cityInput');
     if (element[0].value === '') {
       return 0;
     }
-    var url = `https://api.openweathermap.org/data/2.5/weather?q=${element[0].value}&units=Metric&appid=${api_key}`;
-    let response = await fetch(url);
-    let data = await response.json();
-    const humidity = document.getElementsByClassName('humidity');
-    const wind = document.getElementsByClassName('wind-speed');
-    const temp = document.getElementsByClassName('weather-temp');
-    const location = document.getElementsByClassName('weather-location');
-    humidity[0].innerHTML = data.main.humidity + ' %';
-    wind[0].innerHTML = data.wind.speed + ' km/hr';
-    temp[0].innerHTML = Math.floor(data.main.temp) + '°C';
-    location[0].innerHTML = data.name;
-
-    if (data.weather[0].icon === '01d' || data.weather[0].icon === '01n') {
-      setIcon(clear);
-    } else if (
-      data.weather[0].icon === '02d' ||
-      data.weather[0].icon === '02n'
-    ) {
-      setIcon(cloud);
-    } else if (
-      data.weather[0].icon === '03d' ||
-      data.weather[0].icon === '03n'
-    ) {
-      setIcon(drizzle);
-    } else if (
-      data.weather[0].icon === '04d' ||
-      data.weather[0].icon === '04n'
-    ) {
-      setIcon(drizzle);
-    } else if (
-      data.weather[0].icon === '09d' ||
-      data.weather[0].icon === '09n'
-    ) {
-      setIcon(rain);
-    } else if (
-      data.weather[0].icon === '10d' ||
-      data.weather[0].icon === '10n'
-    ) {
-      setIcon(rain);
-    } else if (
-      data.weather[0].icon === '13d' ||
-      data.weather[0].icon === '13n'
-    ) {
-      setIcon(snow);
-    } else {
-      setIcon(clear);
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${element[0].value}&units=Metric&appid=${api_key}`;
+    try {
+      let response = await fetch(url);
+      let data = await response.json();
+      setWeatherInfo({
+        humidity: `${data.main.humidity}%`,
+        windSpeed: `${data.wind.speed} km/hr`,
+        temperature: `${Math.floor(data.main.temp)}°C`,
+        location: data.name,
+      });
+      if (data.weather[0].icon === '01d' || data.weather[0].icon === '01n') {
+        setIcon(clear);
+      } else if (
+        data.weather[0].icon === '02d' ||
+        data.weather[0].icon === '02n'
+      ) {
+        setIcon(cloud);
+      } else if (
+        data.weather[0].icon === '03d' ||
+        data.weather[0].icon === '03n'
+      ) {
+        setIcon(drizzle);
+      } else if (
+        data.weather[0].icon === '04d' ||
+        data.weather[0].icon === '04n'
+      ) {
+        setIcon(drizzle);
+      } else if (
+        data.weather[0].icon === '09d' ||
+        data.weather[0].icon === '09n'
+      ) {
+        setIcon(rain);
+      } else if (
+        data.weather[0].icon === '10d' ||
+        data.weather[0].icon === '10n'
+      ) {
+        setIcon(rain);
+      } else if (
+        data.weather[0].icon === '13d' ||
+        data.weather[0].icon === '13n'
+      ) {
+        setIcon(snow);
+      } else {
+        setIcon(clear);
+      }
+    } catch (error) {
+      console.error('Error fetching weather data:', error);
     }
   };
 
@@ -77,22 +84,30 @@ const Weather = () => {
           </div>
         </div>
         <div className='weather-image'>
-          <img src={icon} alt='clouds' />
+          <img src={icon} alt='weather icon' />
         </div>
-        <div className='weather-temp'>24°C</div>
-        <div className='weather-location'>New Delhi</div>
+        <div className='weather-temp'>
+          {weatherInfo && weatherInfo.temperature}
+        </div>
+        <div className='weather-location'>
+          {weatherInfo && weatherInfo.location}
+        </div>
         <div className='data-container'>
           <div className='element'>
             <img src={humidity} alt='' className='icon' />
             <div className='data'>
-              <div className='humidity'>69%</div>
+              <div className='humidity'>
+                {weatherInfo && weatherInfo.humidity}
+              </div>
               <div className='text'>Humidity</div>
             </div>
           </div>
           <div className='element'>
             <img src={wind} alt='' className='icon' />
             <div className='data'>
-              <div className='wind-speed'>69 km/hr</div>
+              <div className='wind-speed'>
+                {weatherInfo && weatherInfo.windSpeed}
+              </div>
               <div className='text'>Wind Speed</div>
             </div>
           </div>
