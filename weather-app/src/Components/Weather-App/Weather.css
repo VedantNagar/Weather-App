@@ -33,7 +33,7 @@
   height: 78px;
   background: #ebfffc;
   border-radius: 40px;
-  cursor: crosshair;
+  cursor: pointer;
 }
 .weather-image {
   margin-top: 29px;
