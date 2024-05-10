@@ -11,7 +11,7 @@ import wind from '../assets/wind.png';
 
 const Weather = () => {
   const api_key = 'df834c31d603a0e29f3cdabf72993e65';
-  const [icon, setIcon] = useState();
+  const [icon, setIcon] = useState(cloud);
 
   const search = async () => {
     const element = document.getElementsByClassName('cityInput');
