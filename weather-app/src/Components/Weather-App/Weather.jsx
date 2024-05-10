@@ -8,6 +8,8 @@ import humidity from '../assets/humidity.png';
 import rain from '../assets/rain.png';
 import snow from '../assets/snow.png';
 import wind from '../assets/wind.png';
+import thunder from '../assets/thunder.png';
+import mist from '../assets/mist.png';
 
 const Weather = () => {
   const api_key = 'df834c31d603a0e29f3cdabf72993e65';
@@ -62,10 +64,20 @@ const Weather = () => {
       ) {
         setIcon(rain);
       } else if (
+        data.weather[0].icon === '11d' ||
+        data.weather[0].icon === '11n'
+      ) {
+        setIcon(thunder);
+      } else if (
         data.weather[0].icon === '13d' ||
         data.weather[0].icon === '13n'
       ) {
         setIcon(snow);
+      } else if (
+        data.weather[0].icon === '50d' ||
+        data.weather[0].icon === '50n'
+      ) {
+        setIcon(mist);
       } else {
         setIcon(clear);
       }
