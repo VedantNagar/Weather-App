@@ -15,10 +15,10 @@ const Weather = () => {
   const api_key = 'df834c31d603a0e29f3cdabf72993e65';
   const [icon, setIcon] = useState(cloud);
   const [weatherInfo, setWeatherInfo] = useState({
-    location: 'New Delhi',
-    humidity: '69%',
-    windSpeed: '69 km/hr',
-    temperature: '69°C',
+    location: 'Place',
+    humidity: '-%',
+    windSpeed: '- km/hr',
+    temperature: '-°C',
   });
 
   const search = async () => {
